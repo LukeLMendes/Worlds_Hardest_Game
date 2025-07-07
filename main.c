@@ -491,6 +491,16 @@ int main(int argc, char **argv)
                 /* CHECAGEM PARA VER SE O JOGADOR TERMINOU A FASE 1 */
                 if (bloco_pos_x >= 600 - 28)
                 {
+                    //Tela de termino da 1ªfase
+                    //Limpa a tela
+                    al_clear_to_color(al_map_rgb(174, 183 , 254));
+
+                    // Escreve a mensagem no meio da tela
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 - 70, ALLEGRO_ALIGN_CENTRE, "Era apenas");
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 + 20, ALLEGRO_ALIGN_CENTRE, "pra aquecer");
+                    al_flip_display();
+                    // Espera 2 segundos
+                    al_rest(2.0);
                     fase = 2;
                     bloco_pos_x = spawnpoint_x[1];
                     bloco_pos_y = spawnpoint_y[1];
@@ -671,6 +681,16 @@ int main(int argc, char **argv)
                     if ((bloco_pos_x >= 320 - 28)&(bloco_pos_x <= 400)&(bloco_pos_y >= 340 - 28)&
                     (bloco_pos_y <= 420)&(qtd_moeda == 1))
                     {
+                        //Tela de termino da 2ªfase
+                    //Limpa a tela
+                    al_clear_to_color(al_map_rgb(174, 183 , 254));
+
+                    // Escreve a mensagem no meio da tela
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 - 70, ALLEGRO_ALIGN_CENTRE, "Nem perde");
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 + 20, ALLEGRO_ALIGN_CENTRE, "o tempo tentando");
+                    al_flip_display();
+                    // Espera 2 segundos
+                    al_rest(2.0);
                         fase = 3;
                         bloco_pos_x = spawnpoint_x[2];
                         bloco_pos_y = spawnpoint_y[2];
