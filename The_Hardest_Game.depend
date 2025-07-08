@@ -535,7 +535,7 @@
 	"allegro5/allegro.h"
 	"allegro5/allegro_font.h"
 
-1751923260 source:c:\users\pichau\worlds_hardest_game\main.c
+1752001040 source:c:\users\pichau\worlds_hardest_game\main.c
 	<stdio.h>
 	<allegro5/allegro_font.h>
 	<allegro5/allegro_ttf.h>
