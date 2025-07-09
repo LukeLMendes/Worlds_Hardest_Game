@@ -28,16 +28,18 @@ int main(int argc, char **argv)
     al_install_audio();
     al_init_acodec_addon();
     al_reserve_samples(1);
+
     ALLEGRO_DISPLAY *display                = NULL;
     ALLEGRO_EVENT_QUEUE *event_queue        = NULL;
     ALLEGRO_TIMER *timer                    = NULL;
     ALLEGRO_FONT *font                      = al_load_ttf_font("fonts/American Captain.ttf", 100, 0);
     ALLEGRO_FONT *font2                     = al_load_ttf_font("fonts/American Captain.ttf", 110, 0);
     ALLEGRO_FONT *font3                     = al_load_ttf_font("fonts/American Captain.ttf", 60, 0);
-    ALLEGRO_FONT *font4                     = al_load_ttf_font("fonts/American Captain.ttf", 120, 0); //-------------------
+    ALLEGRO_FONT *font4                     = al_load_ttf_font("fonts/American Captain.ttf", 120, 0);
     ALLEGRO_AUDIO_STREAM *musica            = al_load_audio_stream("audios/musica.ogg", 4, 2048);
     ALLEGRO_SAMPLE *selectingmenu_sample    = al_load_sample("audios/selectingaudio.ogg");
     ALLEGRO_SAMPLE_INSTANCE *selectingmenu  = al_create_sample_instance(selectingmenu_sample);
+
 
     al_attach_sample_instance_to_mixer(selectingmenu, al_get_default_mixer());
 
@@ -46,7 +48,7 @@ int main(int argc, char **argv)
         return -1;
     }
     if (!selectingmenu_sample) {
-        fprintf(stderr, "Erro ao criar inst�ncia do sample\n");
+        fprintf(stderr, "Erro ao criar instância do sample\n");
         return -1;
     }
     if (!musica) {
@@ -105,7 +107,7 @@ int main(int argc, char **argv)
 
     }
 
-    /* DECLARA��O DOS BITMAPS */
+    /* DECLARACAO DOS BITMAPS */
     ALLEGRO_BITMAP *bloco           = NULL;
     ALLEGRO_BITMAP *obstaculo       = NULL;
     ALLEGRO_BITMAP *moeda           = NULL;
@@ -130,16 +132,18 @@ int main(int argc, char **argv)
     float bloco_vy       = 0;
     bool playingsound    = true;
     bool origem_abaixo, origem_acima, ainda_abaixo, ainda_acima, apertou_em_cima, contra_bug, contra_bug_2, can_move, key_down_before;
-    float alpha          = 0; /*DECLARA��O DO GRAU DE TRANSPAR�NCIA DO OBJETO */
-    int deaths           = 0; /*DECLARA��O DA VARIAVEL QUE GUARDAR� O VALOR DO N�MERO DE MORTES */
-    int fase             = 1; /* DECLARA��O DA VARIAVEL QUE CONTROLAR� AS FASES QUE APARECEM NA TELA */
-    int qtd_moeda        = 0; /* DECLARA��O DA QUANTIDADE DE MOEDAS COLETADAS PELO JOGADOR */
+    float alpha          = 0; /*DECLARAï¿½ï¿½O DO GRAU DE TRANSPARï¿½NCIA DO OBJETO */
+    int deaths           = 0; /*DECLARAï¿½ï¿½O DA VARIAVEL QUE GUARDARï¿½ O VALOR DO Nï¿½MERO DE MORTES */
+    int fase             = 1; /* DECLARAï¿½ï¿½O DA VARIAVEL QUE CONTROLARï¿½ AS FASES QUE APARECEM NA TELA */
+    int qtd_moeda        = 0; /* DECLARAï¿½ï¿½O DA QUANTIDADE DE MOEDAS COLETADAS PELO JOGADOR */
+    char cont_mortes[50];
 
-    /* CARREGAMENTO DOS BITMAPS QUE V�O SER USADOS NO JOGO*/
+
+    /* CARREGAMENTO DOS BITMAPS QUE Vï¿½O SER USADOS NO JOGO*/
     bloco             = al_load_bitmap("imagens/bloco_28.png");
     obstaculo         = al_load_bitmap("imagens/obstaculo_20.png");
     moeda             = al_load_bitmap("imagens/moeda_20.png");
-    background_menu  = al_load_bitmap("imagens/backgroundmenu.jpg");
+    background_menu  = al_load_bitmap("imagens/bground.jpg");
     background_1      = al_load_bitmap("imagens/background_1.png");
     background_2      = al_load_bitmap("imagens/background_2.png");
     background_3      = al_load_bitmap ("imagens/background_3.png");
@@ -177,13 +181,13 @@ int main(int argc, char **argv)
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_clear_to_color(al_map_rgb(0,0,0));
 
-    /* DECLARA��O DAS POSIC�ES DAS MOEDAS DAS FASES DO JOGO */
+    /* DECLARAï¿½ï¿½O DAS POSICï¿½ES DAS MOEDAS DAS FASES DO JOGO */
     int moeda_pos_x[5], moeda_pos_y[5];
 
     /*DECLARACAO DAS POSICOES DOS OBSTACULOS NAS FASES DO JOGO */
     int obs_pos_x [11], obs_pos_y [11];
 
-    /* POSI��ES INICIAIS DOS OBSTACULOS NA FASE 1 */
+    /* POSIï¿½ï¿½ES INICIAIS DOS OBSTACULOS NA FASE 1 */
     for (i = 0; i < 5; i++)
     {
         obs_pos_x[i]= 360 - 20/2;
@@ -195,7 +199,7 @@ int main(int argc, char **argv)
         }
     }
 
-    /* DECLARA��O DAS VELOCIDADES DOS OBSTACULOS DE CADA FASE */
+    /* DECLARAï¿½ï¿½O DAS VELOCIDADES DOS OBSTACULOS DE CADA FASE */
     int obs_vx_1, obs_vy_1, obs_vx_2[11], obs_vy_2[11];
 
     /* VELOCIDADE DOS OBSTACULOS DA FASE 1 */
@@ -527,7 +531,7 @@ int main(int argc, char **argv)
                 }
 
 
-                /* CHEGAGEM DAS COLIS�ES COM OS OBSTACULOS DA FASE 1*/
+                /* CHEGAGEM DAS COLISï¿½ES COM OS OBSTACULOS DA FASE 1*/
                 for (i = 0; i < 5; i++)
                 {
                     if ((bloco_pos_x >= obs_pos_x[i]+4-28)&(bloco_pos_x <= obs_pos_x[i] + 16)&
@@ -560,6 +564,16 @@ int main(int argc, char **argv)
                 /* CHECAGEM PARA VER SE O JOGADOR TERMINOU A FASE 1 */
                 if (bloco_pos_x >= 600 - 28)
                 {
+                    //Tela de termino da 1ï¿½fase
+                    //Limpa a tela
+                    al_clear_to_color(al_map_rgb(174, 183 , 254));
+
+                    // Escreve a mensagem no meio da tela
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 - 70, ALLEGRO_ALIGN_CENTRE, "Era apenas");
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 + 20, ALLEGRO_ALIGN_CENTRE, "pra aquecer");
+                    al_flip_display();
+                    // Espera 2 segundos
+                    al_rest(2.0);
                     fase = 2;
                     bloco_pos_x = spawnpoint_x[1];
                     bloco_pos_y = spawnpoint_y[1];
@@ -567,7 +581,7 @@ int main(int argc, char **argv)
                     bloco_vy = 0;
                     alpha = 0;
 
-                    /* DEFINI��O DAS POSI��ES DE ONDE COME�AR�O OS OBSTACULOS DA FASE 2 */
+                    /* DEFINIï¿½ï¿½O DAS POSIï¿½ï¿½ES DE ONDE COMEï¿½ARï¿½O OS OBSTACULOS DA FASE 2 */
                     obs_pos_x[0] = 300 - 20/2;
                     obs_pos_y[0] = 320 - 20/2;
 
@@ -595,7 +609,7 @@ int main(int argc, char **argv)
                         }
                     }
 
-                    /* DEFINI��O DA VELOCIDADE INICIAL DOS OBSTACULOS DA FASE 2 */
+                    /* DEFINIï¿½ï¿½O DA VELOCIDADE INICIAL DOS OBSTACULOS DA FASE 2 */
                     obs_vx_2[0] = 0;
                     obs_vy_2[0] = -3;
 
@@ -665,7 +679,7 @@ int main(int argc, char **argv)
                         obs_pos_x[i] += obs_vx_2[i];
                     }
 
-                    /* CHECAGEM DOS MOMENTOS NOS QUAIS O SENTIDO DAS VELOCIDADES DOS OBSTACULOS DA FASE 2 MUDAR�O */
+                    /* CHECAGEM DOS MOMENTOS NOS QUAIS O SENTIDO DAS VELOCIDADES DOS OBSTACULOS DA FASE 2 MUDARï¿½O */
                     for (i = 0; i < 11; i++)
                     {
                         if ((obs_pos_x[i] + 10 == 300)&(obs_pos_y[i]+10 <= 320))
@@ -702,7 +716,7 @@ int main(int argc, char **argv)
                         }
                     }
 
-                    /* CHEGAGEM DAS COLIS�ES COM OS OBSTACULOS DA FASE 2*/
+                    /* CHEGAGEM DAS COLISï¿½ES COM OS OBSTACULOS DA FASE 2*/
                     for (i = 0; i < 11; i++)
                     {
                         if ((bloco_pos_x >= obs_pos_x[i]+4-28)&(bloco_pos_x <= obs_pos_x[i] + 16)&
@@ -740,6 +754,16 @@ int main(int argc, char **argv)
                     if ((bloco_pos_x >= 320 - 28)&(bloco_pos_x <= 400)&(bloco_pos_y >= 340 - 28)&
                     (bloco_pos_y <= 420)&(qtd_moeda == 1))
                     {
+                        //Tela de termino da 2ï¿½fase
+                    //Limpa a tela
+                    al_clear_to_color(al_map_rgb(174, 183 , 254));
+
+                    // Escreve a mensagem no meio da tela
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 - 70, ALLEGRO_ALIGN_CENTRE, "Nem perde");
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 + 20, ALLEGRO_ALIGN_CENTRE, "o tempo tentando");
+                    al_flip_display();
+                    // Espera 2 segundos
+                    al_rest(2.0);
                         fase = 3;
                         bloco_pos_x = spawnpoint_x[2];
                         bloco_pos_y = spawnpoint_y[2];
@@ -1109,14 +1133,20 @@ int main(int argc, char **argv)
             if (fase == 1)
             {
                 al_draw_bitmap(background_1, 0, 0, 0);
+                al_draw_text(font3, al_map_rgb(0, 0, 0), 10, 10, 0, cont_mortes);
+                sprintf(cont_mortes, "mortes: %d", deaths);
             }
             else if (fase == 2)
             {
                 al_draw_bitmap(background_2, 0, 0, 0);
+                al_draw_text(font3, al_map_rgb(0, 0, 0), 10, 10, 0, cont_mortes);
+                sprintf(cont_mortes, "mortes: %d", deaths);
             }
             else if (fase == 3)
             {
                 al_draw_bitmap(background_3, 0, 0, 0);
+                al_draw_text(font3, al_map_rgb(0, 0, 0), 10, 10, 0, cont_mortes);
+                sprintf(cont_mortes, "mortes: %d", deaths);
             }
 
             /* DESENHO DO BLOCO */
