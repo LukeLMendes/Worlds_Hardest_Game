@@ -7,7 +7,6 @@
  */
 
 
-
 #include <stdio.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
@@ -16,26 +15,45 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
 const float FPS = 60;
-
 const int SCREEN_W = 720;
-
 const int SCREEN_H = 720;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
 int main(int argc, char **argv)
-
 {
+    al_init();
+    al_init_font_addon();
+    al_init_ttf_addon();
+    al_init_image_addon();
+    al_install_audio();
+    al_init_acodec_addon();
+    al_reserve_samples(1);
 
-    ALLEGRO_DISPLAY *display = NULL;
+    ALLEGRO_DISPLAY *display                = NULL;
+    ALLEGRO_EVENT_QUEUE *event_queue        = NULL;
+    ALLEGRO_TIMER *timer                    = NULL;
+    ALLEGRO_FONT *font                      = al_load_ttf_font("fonts/American Captain.ttf", 100, 0);
+    ALLEGRO_FONT *font2                     = al_load_ttf_font("fonts/American Captain.ttf", 110, 0);
+    ALLEGRO_FONT *font3                     = al_load_ttf_font("fonts/American Captain.ttf", 60, 0);
+    ALLEGRO_FONT *font4                     = al_load_ttf_font("fonts/American Captain.ttf", 120, 0);
+    ALLEGRO_AUDIO_STREAM *musica            = al_load_audio_stream("audios/musica.ogg", 4, 2048);
+    ALLEGRO_SAMPLE *selectingmenu_sample    = al_load_sample("audios/selectingaudio.ogg");
+    ALLEGRO_SAMPLE_INSTANCE *selectingmenu  = al_create_sample_instance(selectingmenu_sample);
 
-    ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 
-    ALLEGRO_TIMER *timer = NULL;
+    al_attach_sample_instance_to_mixer(selectingmenu, al_get_default_mixer());
 
+<<<<<<< HEAD
     al_init();
 
     al_init_font_addon();
@@ -62,15 +80,31 @@ int main(int argc, char **argv)
 
     al_attach_sample_instance_to_mixer(selectingmenu, al_get_default_mixer());
 
+=======
+    if (!selectingmenu) {
+        printf("Erro ao carregar musica!\n");
+        return -1;
+    }
+    if (!selectingmenu_sample) {
+        fprintf(stderr, "Erro ao criar instância do sample\n");
+        return -1;
+    }
+    if (!musica) {
+        printf("Erro ao carregar musica!\n");
+        return -1;
+    }
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
 
     if(!al_init())
-
     {
-
         fprintf(stderr, "failed to initialize allegro!\n");
+        return -1;
+    }
 
-        return -1; /* return -1 indica que o programa vai encerrar */
-
+    if (!font)
+    {
+        printf("falha ao carregar fonte!\n");
+        return -1;
     }
 
     if (!musica)
@@ -104,67 +138,45 @@ int main(int argc, char **argv)
 
     ///definição do timer
     timer = al_create_timer(1.0 / FPS);
-
     if(!timer)
-
     {
-
         fprintf(stderr, "failed to create timer!\n");
-
         return -1;
-
     }
 
     bool redraw = true;
 
     al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_REQUIRE);
-
     al_set_new_display_flags(ALLEGRO_OPENGL | ALLEGRO_WINDOWED);
 
     display = al_create_display(SCREEN_W, SCREEN_H);
-
     if(!display)
-
     {
-
         fprintf(stderr, "failed to create display!\n");
-
-        al_destroy_timer(timer); /* serve para desalocar o ponteiro relacionado ao timer */
-
+        al_destroy_timer(timer); // serve para desalocar o ponteiro relacionado ao timer
         return -1;
-
     }
 
     if(!al_install_keyboard())
-
     {
-
         fprintf(stderr, "failed to initialize the keyboard!\n");
-
         return -1;
-
     }
 
     if(!al_install_mouse())
-
     {
-
         fprintf(stderr, "failed to initialize the mouse!\n");
-
         return -1;
-
     }
 
     if(!al_init_image_addon())
-
     {
-
         fprintf(stderr, "failed to initialize the image addon!\n");
-
         return -1;
 
     }
 
+<<<<<<< HEAD
     /* DECLARAÇÃO DOS BITMAPS */
     ALLEGRO_BITMAP *bloco = NULL;
 
@@ -177,18 +189,34 @@ int main(int argc, char **argv)
     ALLEGRO_BITMAP *background_2 = NULL;
 
     ALLEGRO_BITMAP *background_3 = NULL;
+=======
+    /* DECLARACAO DOS BITMAPS */
+    ALLEGRO_BITMAP *bloco           = NULL;
+    ALLEGRO_BITMAP *obstaculo       = NULL;
+    ALLEGRO_BITMAP *moeda           = NULL;
+    ALLEGRO_BITMAP *background_menu = NULL;
+    ALLEGRO_BITMAP *background_1    = NULL;
+    ALLEGRO_BITMAP *background_2    = NULL;
+    ALLEGRO_BITMAP *background_3    = NULL;
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
 
     ALLEGRO_BITMAP *background_menu = NULL;
 
     /* DECLARACAO E DEFINICAO DOS SPAWNPOINTS DE CADA FASE */
+<<<<<<< HEAD
     int spawnpoint_x[3], spawnpoint_y[3], i, j;
     spawnpoint_x[0] = 80 - 28/2;
+=======
+    int spawnpoint_x[3], spawnpoint_y[3], i;
+    spawnpoint_x[0] = 80  - 28/2;
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
     spawnpoint_y[0] = 360 - 28/2;
     spawnpoint_x[1] = 360 - 28/2;
     spawnpoint_y[1] = 380 - 28/2;
     spawnpoint_x[2] = 180 - 28/2;
     spawnpoint_y[2] = 220 - 28/2;
 
+<<<<<<< HEAD
 
     float bloco_pos_x = spawnpoint_x[0];
 
@@ -223,15 +251,35 @@ int main(int argc, char **argv)
     obstaculo         = al_load_bitmap("imagens/obstaculo_20.png");
     moeda             = al_load_bitmap("imagens/moeda_20.png");
     background_menu   = al_load_bitmap("imagens/bground.jpg");
+=======
+    float volume         = 0.5;
+    float bloco_pos_x    = spawnpoint_x[0];
+    float bloco_pos_y    = spawnpoint_y[0];
+    float bloco_vx       = 0;
+    float bloco_vy       = 0;
+    bool playingsound    = true;
+    bool origem_abaixo, origem_acima, ainda_abaixo, ainda_acima, apertou_em_cima, contra_bug, contra_bug_2, can_move, key_down_before;
+    float alpha          = 0; /*DECLARAï¿½ï¿½O DO GRAU DE TRANSPARï¿½NCIA DO OBJETO */
+    int deaths           = 0; /*DECLARAï¿½ï¿½O DA VARIAVEL QUE GUARDARï¿½ O VALOR DO Nï¿½MERO DE MORTES */
+    int fase             = 1; /* DECLARAï¿½ï¿½O DA VARIAVEL QUE CONTROLARï¿½ AS FASES QUE APARECEM NA TELA */
+    int qtd_moeda        = 0; /* DECLARAï¿½ï¿½O DA QUANTIDADE DE MOEDAS COLETADAS PELO JOGADOR */
+    char cont_mortes[50];
+
+
+    /* CARREGAMENTO DOS BITMAPS QUE Vï¿½O SER USADOS NO JOGO*/
+    bloco             = al_load_bitmap("imagens/bloco_28.png");
+    obstaculo         = al_load_bitmap("imagens/obstaculo_20.png");
+    moeda             = al_load_bitmap("imagens/moeda_20.png");
+    background_menu  = al_load_bitmap("imagens/bground.jpg");
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
     background_1      = al_load_bitmap("imagens/background_1.png");
     background_2      = al_load_bitmap("imagens/background_2.png");
     background_3      = al_load_bitmap ("imagens/background_3.png");
 
 
-
-    if(!bloco)
-
+        if(!background_menu)
     {
+<<<<<<< HEAD
 
         fprintf(stderr, "falhou ao criar o bloco bitmap!\n");
 
@@ -253,20 +301,30 @@ int main(int argc, char **argv)
 
         fprintf(stderr, "falhou ao criar a moeda bitmap!\n");
 
+=======
+        fprintf(stderr, "falhou ao criar a backgrouund bitmap!\n");
         return -1;
-
+    }
+    if(!bloco)
+    {
+        fprintf(stderr, "falhou ao criar a bloco bitmap!\n");
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
+        return -1;
     }
 
     if(!background_1)
-
     {
+<<<<<<< HEAD
 
         fprintf(stderr, "falhou ao criar o background_1 bitmap!\n");
 
+=======
+        fprintf(stderr, "falhou ao criar o background bitmap!\n");
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
         return -1;
-
     }
 
+<<<<<<< HEAD
     if(!background_1)
 
     {
@@ -302,42 +360,39 @@ int main(int argc, char **argv)
 
 
 
+=======
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
     al_set_target_bitmap(al_get_backbuffer(display));
-
-
-
     event_queue = al_create_event_queue();
 
     if(!event_queue)
-
     {
-
         fprintf(stderr, "failed to create event_queue!\n");
-
         return -1;
-
     }
 
     al_register_event_source(event_queue, al_get_display_event_source(display));
-
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
-
     al_register_event_source(event_queue, al_get_keyboard_event_source());
-
     al_register_event_source(event_queue, al_get_mouse_event_source());
-
-
-
     al_clear_to_color(al_map_rgb(0,0,0));
 
+<<<<<<< HEAD
     /* DECLARAÇÃO DAS POSICÕES DAS MOEDAS DAS FASES DO JOGO */
     int moeda_pos_x[4], moeda_pos_y[4];
-
+=======
+    /* DECLARAï¿½ï¿½O DAS POSICï¿½ES DAS MOEDAS DAS FASES DO JOGO */
+    int moeda_pos_x[5], moeda_pos_y[5];
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
 
     /*DECLARACAO DAS POSICOES DOS OBSTACULOS NAS FASES DO JOGO */
     int obs_pos_x [11], obs_pos_y [11];
 
+<<<<<<< HEAD
     /* POSIÇÕES INICIAIS DOS OBSTACULOS NA FASE 1 */
+=======
+    /* POSIï¿½ï¿½ES INICIAIS DOS OBSTACULOS NA FASE 1 */
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
     for (i = 0; i < 5; i++)
     {
         obs_pos_x[i]= 360 - 20/2;
@@ -349,22 +404,30 @@ int main(int argc, char **argv)
         }
     }
 
+<<<<<<< HEAD
     /* DECLARAÇÃO DAS VELOCIDADES DOS OBSTACULOS DE CADA FASE */
     int obs_vx_1, obs_vx_2[11], obs_vy_2[11], obs_vx_3[7], obs_vy_3[7];
+=======
+    /* DECLARAï¿½ï¿½O DAS VELOCIDADES DOS OBSTACULOS DE CADA FASE */
+    int obs_vx_1, obs_vy_1, obs_vx_2[11], obs_vy_2[11];
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
 
     /* VELOCIDADE DOS OBSTACULOS DA FASE 1 */
     obs_vx_1 = 6;
 
+<<<<<<< HEAD
     /* Declaração do GameState */
     typedef enum
         {MENU, TRANSITION, GAME} GameState;
 
     GameState current_state = MENU;
 
+=======
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
     al_flip_display();
-
     al_start_timer(timer);
 
+<<<<<<< HEAD
     /************************** LOOP DO MENU ***********************/
     while(current_state == MENU)
     {
@@ -601,19 +664,234 @@ int main(int argc, char **argv)
     {
         al_attach_audio_stream_to_mixer(musica, al_get_default_mixer());
         al_set_audio_stream_playmode(musica, ALLEGRO_PLAYMODE_LOOP);
+=======
+    typedef enum
+        {MENU, TRANSITION, GAME} GameState;
+
+    GameState current_state = MENU;
+
+    //MENU
+    while(current_state == MENU){
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
 
         ALLEGRO_EVENT ev;
-
         al_wait_for_event(event_queue, &ev);
 
+        if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+        }
+        else if (ev.type == ALLEGRO_EVENT_TIMER) {
+            redraw = true;
+        }
+        else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
+
+            int mx = ev.mouse.x;
+            int my = ev.mouse.y;
+
+                    //PLAYBUTTON
+            int largura_play = al_get_text_width(font, "PLAY");
+            int altura_play = al_get_font_line_height(font);
+            float play_pos_x = (SCREEN_W - largura_play) / 2.0;
+            float play_pos_Y = (SCREEN_H / 2) - 30;
+
+                    //-VOLUME
+            int largura_volmenos = al_get_text_width(font, "-");
+            int altura_volmenos  = al_get_font_line_height(font);
+            float menos_pos_x    = (SCREEN_W/2 - 160);
+            float menos_pos_Y    = SCREEN_H / 2 + 90;
+
+                    //+VOLUME
+            int largura_volmais = al_get_text_width(font, "-");
+            int altura_volmais  = al_get_font_line_height(font);
+            float mais_pos_x    = (SCREEN_W/2 + 135);
+            float mais_pos_Y    = SCREEN_H / 2 + 60;
+
+            //CLICKS
+                    //CLICK PLAY
+            if (
+                mx >= (play_pos_x) && mx <= (play_pos_x + largura_play) &&
+                my >= (play_pos_Y) && my <= (play_pos_Y + altura_play)) {
+                if (playingsound){
+                        al_stop_sample_instance(selectingmenu);
+                        al_play_sample_instance(selectingmenu);
+                }
+                else if (!playingsound){
+                        al_play_sample_instance(selectingmenu);
+                }
+
+                current_state = GAME;
+
+                break;
+
+                al_destroy_bitmap(background_menu);
+            }
+                    //CLICK -VOLUME
+            if (
+                mx >= (menos_pos_x) && mx <= (menos_pos_x + largura_volmenos) &&
+                my >= (menos_pos_Y) && my <= (menos_pos_Y + altura_volmenos)) {
+
+                if (volume >= 0)
+                {
+
+                    volume = volume - 0.1;
+                    al_set_audio_stream_gain(musica, volume);
+                    al_set_sample_instance_gain(selectingmenu, volume);
+                    if (playingsound){
+                        al_stop_sample_instance(selectingmenu);
+                        al_play_sample_instance(selectingmenu);
+                    }
+                    else if (!playingsound){
+                        al_play_sample_instance(selectingmenu);
+                    }
+                }
+            }
+                    //CLICK +VOLUME
+            if (
+                mx >= (mais_pos_x) && mx <= (mais_pos_x + largura_volmais) &&
+                my >= (mais_pos_Y) && my <= (mais_pos_Y + altura_volmais)) {
+
+                if (volume <= 1)
+                {
+
+                    volume = volume + 0.1;
+                    al_set_audio_stream_gain(musica, volume);
+                    al_set_sample_instance_gain(selectingmenu, volume);
+                    if (playingsound){
+                        al_stop_sample_instance(selectingmenu);
+                        al_play_sample_instance(selectingmenu);
+                    }
+                    else if (!playingsound){
+                        al_play_sample_instance(selectingmenu);
+                    }
+                }
+            }
+        }
+
+        if (redraw && al_is_event_queue_empty(event_queue)) {
+            redraw = false;
+
+            //LOAD IMAGES
+            al_draw_bitmap(background_menu, 0, 0, 0);
+
+            // COORD MOUSE
+            ALLEGRO_MOUSE_STATE mouse_state;
+            al_get_mouse_state(&mouse_state);
+
+            // DECLARAR TAMANHOS E POSICOES
+                    //PLAYBUTTON
+            int largura_play = al_get_text_width(font, "PLAY");
+            int altura_play = al_get_font_line_height(font);
+            float play_pos_x = (SCREEN_W - largura_play) / 2.0;
+            float play_pos_Y = SCREEN_H / 2 - 30;
+
+                    //-VOLUME
+            int largura_volmenos = al_get_text_width(font, "-");
+            int altura_volmenos  = al_get_font_line_height(font);
+            float menos_pos_x    = (SCREEN_W/2 - 160);
+            float menos_pos_Y    = SCREEN_H / 2 + 90;
+
+                    //+VOLUME
+            int largura_volmais = al_get_text_width(font, "-");
+            int altura_volmais  = al_get_font_line_height(font);
+            float mais_pos_x    = (SCREEN_W/2 + 135);
+            float mais_pos_Y    = SCREEN_H / 2 + 60;
+
+                    //"VOLUME"
+            al_draw_text(font3, al_map_rgb(139,0,0), SCREEN_W/2 + 4, SCREEN_H/2 + 104, ALLEGRO_ALIGN_CENTRE, "Volume");
+            al_draw_text(font3, al_map_rgb(255,255,255), SCREEN_W/2, SCREEN_H/2 + 100, ALLEGRO_ALIGN_CENTRE, "Volume");
+
+                    //TITULO
+            al_draw_text(font4, al_map_rgb(255,0,0), SCREEN_W/2 + 5, SCREEN_H/2 -265, ALLEGRO_ALIGN_CENTRE, "Worlds Hardest");
+            al_draw_text(font4, al_map_rgb(255,0,0), SCREEN_W/2 + 5, SCREEN_H/2 -155, ALLEGRO_ALIGN_CENTRE, "Game");
+            al_draw_text(font4, al_map_rgb(255,255,255), SCREEN_W/2, SCREEN_H/2 -270, ALLEGRO_ALIGN_CENTRE, "Worlds Hardest");
+            al_draw_text(font4, al_map_rgb(255,255,255), SCREEN_W/2, SCREEN_H/2 -160, ALLEGRO_ALIGN_CENTRE, "Game");
+
+            char strVol[6];
+            sprintf(strVol, "%.1f", volume);
+
+                    //NUMEROS VOLUME
+            if (volume > 0){
+                al_draw_text(font3, al_map_rgb(139,0,0), SCREEN_W/2 + 4, SCREEN_H/2 + 154, ALLEGRO_ALIGN_CENTRE, strVol);
+                al_draw_text(font3, al_map_rgb(255,255,255), SCREEN_W/2, SCREEN_H/2 + 150, ALLEGRO_ALIGN_CENTRE, strVol);
+            }
+            else if(volume < 0){
+                al_draw_text(font3, al_map_rgb(139,0,0), SCREEN_W/2 + 4, SCREEN_H/2 + 154, ALLEGRO_ALIGN_CENTRE, "0.0");
+                al_draw_text(font3, al_map_rgb(255,255,255), SCREEN_W/2, SCREEN_H/2 + 150, ALLEGRO_ALIGN_CENTRE, "0.0");
+            }
+
+            int mx = mouse_state.x;
+            int my = mouse_state.y;
 
 
+<<<<<<< HEAD
+=======
+
+            // AUMENTAR BOTOES
+                    //AUMENTAR PLAY
+            if (
+                mx >= (play_pos_x) && mx <= (play_pos_x + largura_play) &&
+                my >= (play_pos_Y) && my <= (play_pos_Y + altura_play)) {
+                al_draw_text(font2, al_map_rgb(139,0,0), SCREEN_W/2 + 4,   SCREEN_H/2 - 6,  ALLEGRO_ALIGN_CENTRE, "PLAY");  //sombra
+                al_draw_text(font3, al_map_rgb(139,0,0), SCREEN_W/2 - 147, SCREEN_H/2 + 103, ALLEGRO_ALIGN_CENTRE, "-");    //sombra
+                al_draw_text(font3, al_map_rgb(139,0,0), SCREEN_W/2 + 153, SCREEN_H/2 + 103, ALLEGRO_ALIGN_CENTRE, "+");    //sombra
+                al_draw_text(font2, al_map_rgb(255,255,255), SCREEN_W/2,       SCREEN_H/2 - 10,  ALLEGRO_ALIGN_CENTRE, "PLAY");
+                al_draw_text(font3, al_map_rgb(255,255,255), SCREEN_W/2 - 150, SCREEN_H/2 + 100, ALLEGRO_ALIGN_CENTRE, "-");
+                al_draw_text(font3, al_map_rgb(255,255,255), SCREEN_W/2 + 150, SCREEN_H/2 + 100, ALLEGRO_ALIGN_CENTRE, "+");
+                }
+                    //AUMENTAR -VOLUME
+            else if (
+                mx >= (menos_pos_x) && mx <= (menos_pos_x + largura_volmenos) &&
+                my >= (menos_pos_Y) && my <= (menos_pos_Y + altura_volmenos)) {
+                al_draw_text(font,  al_map_rgb(139,0,0), SCREEN_W/2 + 4,   SCREEN_H/2 + 4,  ALLEGRO_ALIGN_CENTRE, "PLAY");  //sombra
+                al_draw_text(font2, al_map_rgb(139,0,0), SCREEN_W/2 - 146, SCREEN_H/2 + 79,  ALLEGRO_ALIGN_CENTRE, "-");    //sombra
+                al_draw_text(font3, al_map_rgb(139,0,0), SCREEN_W/2 + 153, SCREEN_H/2 + 103, ALLEGRO_ALIGN_CENTRE, "+");    //sombra
+                al_draw_text(font,  al_map_rgb(255,255,255), SCREEN_W/2,       SCREEN_H/2,  ALLEGRO_ALIGN_CENTRE, "PLAY");
+                al_draw_text(font2, al_map_rgb(255,255,255), SCREEN_W/2 - 150, SCREEN_H/2 + 75,  ALLEGRO_ALIGN_CENTRE, "-");
+                al_draw_text(font3, al_map_rgb(255,255,255), SCREEN_W/2 + 150, SCREEN_H/2 + 100, ALLEGRO_ALIGN_CENTRE, "+");
+            }
+                    //AUMENTAR +VOLUME
+            else if (
+                mx >= (mais_pos_x) && mx <= (mais_pos_x + largura_volmais) &&
+                my >= (mais_pos_Y) && my <= (mais_pos_Y + altura_volmais)) {
+                al_draw_text(font, al_map_rgb(139,0,0),  SCREEN_W/2 + 4,   SCREEN_H/2 + 4,  ALLEGRO_ALIGN_CENTRE, "PLAY");  //sombra
+                al_draw_text(font3, al_map_rgb(139,0,0), SCREEN_W/2 - 147, SCREEN_H/2 + 103, ALLEGRO_ALIGN_CENTRE, "-");    //sombra
+                al_draw_text(font2, al_map_rgb(139,0,0), SCREEN_W/2 + 154, SCREEN_H/2 + 79,  ALLEGRO_ALIGN_CENTRE, "+");    //sombra
+                al_draw_text(font, al_map_rgb(255,255,255),  SCREEN_W/2,       SCREEN_H/2,  ALLEGRO_ALIGN_CENTRE, "PLAY");
+                al_draw_text(font3, al_map_rgb(255,255,255), SCREEN_W/2 - 150, SCREEN_H/2 + 100, ALLEGRO_ALIGN_CENTRE, "-");
+                al_draw_text(font2, al_map_rgb(255,255,255), SCREEN_W/2 + 150, SCREEN_H/2 + 75,  ALLEGRO_ALIGN_CENTRE, "+");
+            }
+                    //RESTO
+            else {
+                al_draw_text(font, al_map_rgb(139,0,0),  SCREEN_W/2 + 4,   SCREEN_H/2 + 4,  ALLEGRO_ALIGN_CENTRE, "PLAY");  //sombra
+                al_draw_text(font3, al_map_rgb(139,0,0), SCREEN_W/2 - 147, SCREEN_H/2 + 103, ALLEGRO_ALIGN_CENTRE, "-");    //sombra
+                al_draw_text(font3, al_map_rgb(139,0,0), SCREEN_W/2 + 153, SCREEN_H/2 + 103, ALLEGRO_ALIGN_CENTRE, "+");    //sombra
+                al_draw_text(font, al_map_rgb(255,255,255),  SCREEN_W/2,       SCREEN_H/2,  ALLEGRO_ALIGN_CENTRE, "PLAY");
+                al_draw_text(font3, al_map_rgb(255,255,255), SCREEN_W/2 - 150, SCREEN_H/2 + 100, ALLEGRO_ALIGN_CENTRE, "-");
+                al_draw_text(font3, al_map_rgb(255,255,255), SCREEN_W/2 + 150, SCREEN_H/2 + 100, ALLEGRO_ALIGN_CENTRE, "+");
+            }
+
+            al_flip_display();
+        }
+    }
+
+    //TRANSICAO
+    while(current_state == TRANSITION){
+        printf("Transicao");
+    }
+
+    //GAME
+    while(current_state == GAME){
+
+        al_attach_audio_stream_to_mixer(musica, al_get_default_mixer());
+        al_set_audio_stream_playmode(musica, ALLEGRO_PLAYMODE_LOOP);
+
+        ALLEGRO_EVENT ev;
+        al_wait_for_event(event_queue, &ev);
+
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
         if(ev.type==ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
         {
-
         }
         else if(ev.type == ALLEGRO_EVENT_TIMER)
-
         {
             /* MOVIMENTAÇÃO DO BLOCO */
             bloco_pos_x += bloco_vx;
@@ -630,6 +908,7 @@ int main(int argc, char **argv)
                 alpha += 0.05;
                 can_move = false;
             }
+
             else if (alpha == 1.0)
             {
                 can_move = true;
@@ -713,7 +992,11 @@ int main(int argc, char **argv)
                 }
 
 
+<<<<<<< HEAD
                 /* CHEGAGEM DAS COLISÕES COM OS OBSTACULOS DA FASE 1*/
+=======
+                /* CHEGAGEM DAS COLISï¿½ES COM OS OBSTACULOS DA FASE 1*/
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
                 for (i = 0; i < 5; i++)
                 {
                     if ((bloco_pos_x >= obs_pos_x[i]+4-28)&(bloco_pos_x <= obs_pos_x[i] + 16)&
@@ -749,6 +1032,7 @@ int main(int argc, char **argv)
                 /* CHECAGEM PARA VER SE O JOGADOR TERMINOU A FASE 1 */
                 if (bloco_pos_x >= 600 - 28)
                 {
+<<<<<<< HEAD
                     //Tela de termino da fase 1
                     //Limpa a tela
                     al_clear_to_color(al_map_rgb(174, 183 , 254));
@@ -762,16 +1046,30 @@ int main(int argc, char **argv)
                     al_rest(2.0);
 
                     fase = 2;
+=======
+                    //Tela de termino da 1ï¿½fase
+                    //Limpa a tela
+                    al_clear_to_color(al_map_rgb(174, 183 , 254));
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
 
+                    // Escreve a mensagem no meio da tela
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 - 70, ALLEGRO_ALIGN_CENTRE, "Era apenas");
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 + 20, ALLEGRO_ALIGN_CENTRE, "pra aquecer");
+                    al_flip_display();
+                    // Espera 2 segundos
+                    al_rest(2.0);
+                    fase = 2;
                     bloco_pos_x = spawnpoint_x[1];
                     bloco_pos_y = spawnpoint_y[1];
-
                     bloco_vx = 0;
                     bloco_vy = 0;
-
                     alpha = 0;
 
+<<<<<<< HEAD
                     /* DEFINIÇÃO DAS POSIÇÕES DE ONDE COMEÇARÃO OS OBSTACULOS DA FASE 2 */
+=======
+                    /* DEFINIï¿½ï¿½O DAS POSIï¿½ï¿½ES DE ONDE COMEï¿½ARï¿½O OS OBSTACULOS DA FASE 2 */
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
                     obs_pos_x[0] = 300 - 20/2;
                     obs_pos_y[0] = 320 - 20/2;
 
@@ -799,7 +1097,11 @@ int main(int argc, char **argv)
                         }
                     }
 
+<<<<<<< HEAD
                     /* DEFINIÇÃO DA VELOCIDADE INICIAL DOS OBSTACULOS DA FASE 2 */
+=======
+                    /* DEFINIï¿½ï¿½O DA VELOCIDADE INICIAL DOS OBSTACULOS DA FASE 2 */
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
                     obs_vx_2[0] = 0;
                     obs_vy_2[0] = -3;
 
@@ -913,9 +1215,112 @@ int main(int argc, char **argv)
                     if ((bloco_pos_x >= obs_pos_x[i]+4-28)&(bloco_pos_x <= obs_pos_x[i] + 16)&
                     (bloco_pos_y >= obs_pos_y[i]+4-28)&(bloco_pos_y <= obs_pos_y[i] + 16)&(qtd_moeda==0))
                     {
+<<<<<<< HEAD
+=======
+                        bloco_pos_y = 300;
+                    }
+                    else if(bloco_pos_y >= 460 - 28)
+                    {
+                        bloco_pos_y = 460 - 28;
+                    }
+
+                    for (i=0; i<11; i++)
+                    {
+                        obs_pos_y[i] += obs_vy_2[i];
+                        obs_pos_x[i] += obs_vx_2[i];
+                    }
+
+                    /* CHECAGEM DOS MOMENTOS NOS QUAIS O SENTIDO DAS VELOCIDADES DOS OBSTACULOS DA FASE 2 MUDARï¿½O */
+                    for (i = 0; i < 11; i++)
+                    {
+                        if ((obs_pos_x[i] + 10 == 300)&(obs_pos_y[i]+10 <= 320))
+                        {
+                            obs_pos_x[i] = 300 - 10;
+                            obs_pos_y[i] = 320 - 10;
+
+                            obs_vx_2[i] = 3;
+                            obs_vy_2[i] = 0;
+                        }
+                        else if ((obs_pos_x[i] + 10 >= 420)&(obs_pos_y[i]+10 == 320))
+                        {
+                            obs_pos_x[i] = 420 - 10;
+                            obs_pos_y[i] = 320 - 10;
+
+                            obs_vx_2[i] = 0;
+                            obs_vy_2[i] = 3;
+                        }
+                        else if((obs_pos_x[i]+10 == 420)&(obs_pos_y[i]+10 >= 440))
+                        {
+                            obs_pos_x[i] = 420 - 10;
+                            obs_pos_y[i] = 440 - 10;
+
+                            obs_vx_2[i] = -3;
+                            obs_vy_2[i] = 0;
+                        }
+                        else if((obs_pos_x[i]+10 <= 300)&(obs_pos_y[i]+10 == 440))
+                        {
+                            obs_pos_x[i] = 300 - 10;
+                            obs_pos_y[i] = 440 - 10;
+
+                            obs_vx_2[i] = 0;
+                            obs_vy_2[i] = -3;
+                        }
+                    }
+
+                    /* CHEGAGEM DAS COLISï¿½ES COM OS OBSTACULOS DA FASE 2*/
+                    for (i = 0; i < 11; i++)
+                    {
+                        if ((bloco_pos_x >= obs_pos_x[i]+4-28)&(bloco_pos_x <= obs_pos_x[i] + 16)&
+                        (bloco_pos_y >= obs_pos_y[i]+4-28)&(bloco_pos_y <= obs_pos_y[i] + 16)&(qtd_moeda==0))
+                        {
+                            bloco_vx = 0;
+                            bloco_vy = 0;
+                            alpha = 0;
+                            bloco_pos_x = spawnpoint_x[1];
+                            bloco_pos_y = spawnpoint_y[1];
+
+                            deaths = deaths + 1;
+                        }
+                        else if ((bloco_pos_x >= obs_pos_x[i]+5-28)&(bloco_pos_x <= obs_pos_x[i] + 15)&
+                        (bloco_pos_y >= obs_pos_y[i]+5-28)&(bloco_pos_y <= obs_pos_y[i] + 15)&(qtd_moeda==1))
+                        {
+                            bloco_vx = 0;
+                            bloco_vy = 0;
+                            alpha = 0;
+                            bloco_pos_x = spawnpoint_x[1];
+                            bloco_pos_y = spawnpoint_y[1];
+                            deaths = deaths + 1;
+                            qtd_moeda = 0;
+                        }
+                    }
+
+                    /* CHECAGEM PARA VER SE O JOGADOR COLETOU A MOEDA DA FASE 2 */
+                    if ((bloco_pos_x >= moeda_pos_x[0]+4-28)&(bloco_pos_x <= moeda_pos_x[0] + 16)&
+                    (bloco_pos_y >= moeda_pos_y[0]+4-28)&(bloco_pos_y <= moeda_pos_y[0] + 16))
+                    {
+                        qtd_moeda = 1;
+                    }
+
+                    /* CHECAGEM PARA VER SE O JOGADOR TERMINOU A FASE 1 */
+                    if ((bloco_pos_x >= 320 - 28)&(bloco_pos_x <= 400)&(bloco_pos_y >= 340 - 28)&
+                    (bloco_pos_y <= 420)&(qtd_moeda == 1))
+                    {
+                        //Tela de termino da 2ï¿½fase
+                    //Limpa a tela
+                    al_clear_to_color(al_map_rgb(174, 183 , 254));
+
+                    // Escreve a mensagem no meio da tela
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 - 70, ALLEGRO_ALIGN_CENTRE, "Nem perde");
+                    al_draw_text(font, al_map_rgb(0, 0, 0), SCREEN_W/2, SCREEN_H/2 + 20, ALLEGRO_ALIGN_CENTRE, "o tempo tentando");
+                    al_flip_display();
+                    // Espera 2 segundos
+                    al_rest(2.0);
+                        fase = 3;
+                        bloco_pos_x = spawnpoint_x[2];
+                        bloco_pos_y = spawnpoint_y[2];
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
                         bloco_vx = 0;
                         bloco_vy = 0;
-
                         alpha = 0;
 
                         bloco_pos_x = spawnpoint_x[1];
@@ -1508,21 +1913,18 @@ int main(int argc, char **argv)
 
             }
 
-
-
-
             redraw = true;
         }
 
         else if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
-
         {
             switch(ev.keyboard.keycode)
-
             {
+<<<<<<< HEAD
                 case (ALLEGRO_KEY_UP):
+=======
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
                 case (ALLEGRO_KEY_W):
-
                     if (fase == 1)
                     {
                         /* REGULAGEM DO FATOR origem_acima */
@@ -1597,8 +1999,6 @@ int main(int argc, char **argv)
                     {
                         bloco_vy = 0;
                     }
-
-
 
                     break;
 
@@ -1812,6 +2212,7 @@ int main(int argc, char **argv)
                     return 0;
 
                     break;
+<<<<<<< HEAD
 
                 case ALLEGRO_KEY_ENTER:
 
@@ -1840,18 +2241,20 @@ int main(int argc, char **argv)
 
 
 
+=======
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
             }
         }
         else if(ev.type == ALLEGRO_EVENT_KEY_UP)
         {
-
             switch(ev.keyboard.keycode)
-
             {
+<<<<<<< HEAD
 
             case ALLEGRO_KEY_RIGHT:
+=======
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
             case ALLEGRO_KEY_D:
-
                 if (bloco_vx > 0)
                 {
                     bloco_vx = 0;
@@ -1861,7 +2264,6 @@ int main(int argc, char **argv)
 
             case ALLEGRO_KEY_LEFT:
             case ALLEGRO_KEY_A:
-
                 if (bloco_vx < 0)
                 {
                     bloco_vx = 0;
@@ -1871,7 +2273,6 @@ int main(int argc, char **argv)
 
             case ALLEGRO_KEY_UP:
             case ALLEGRO_KEY_W:
-
                 if (bloco_vy < 0)
                 {
                     bloco_vy = 0;
@@ -1881,7 +2282,6 @@ int main(int argc, char **argv)
 
             case ALLEGRO_KEY_DOWN:
             case ALLEGRO_KEY_S:
-
                 if (bloco_vy > 0)
                 {
                     bloco_vy = 0;
@@ -1890,22 +2290,16 @@ int main(int argc, char **argv)
                 break;
 
             }
-
         }
         else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
         {
             break;
         }
 
-
-
         if(redraw && al_is_event_queue_empty(event_queue))
-
         {
 
             redraw = false;
-
-
 
             al_clear_to_color(al_map_rgb(0,100,0));
 
@@ -1913,22 +2307,33 @@ int main(int argc, char **argv)
             if (fase == 1)
             {
                 al_draw_bitmap(background_1, 0, 0, 0);
+<<<<<<< HEAD
 
                 /*CONTADOR DE MORTES */
                 al_draw_text(font3, al_map_rgb(0, 0, 0), 10, 10, 0, cont_mortes);
                 sprintf(cont_mortes, "deaths: %d", deaths);
+=======
+                al_draw_text(font3, al_map_rgb(0, 0, 0), 10, 10, 0, cont_mortes);
+                sprintf(cont_mortes, "mortes: %d", deaths);
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
             }
             else if (fase == 2)
             {
                 al_draw_bitmap(background_2, 0, 0, 0);
+<<<<<<< HEAD
 
                 /*CONTADOR DE MORTES */
                 al_draw_text(font3, al_map_rgb(0, 0, 0), 10, 10, 0, cont_mortes);
                 sprintf(cont_mortes, "deaths: %d", deaths);
+=======
+                al_draw_text(font3, al_map_rgb(0, 0, 0), 10, 10, 0, cont_mortes);
+                sprintf(cont_mortes, "mortes: %d", deaths);
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
             }
             else if (fase == 3)
             {
                 al_draw_bitmap(background_3, 0, 0, 0);
+<<<<<<< HEAD
 
                 /*CONTADOR DE deaths */
                 al_draw_text(font3, al_map_rgb(0, 0, 0), 10, 10, 0, cont_mortes);
@@ -1949,6 +2354,10 @@ int main(int argc, char **argv)
                 al_draw_text(font4, al_map_rgb(0, 0, 0), SCREEN_W/2, 520, ALLEGRO_ALIGN_CENTRE, "Esc to leave");
                 al_draw_text(font4, al_map_rgb(0, 0, 0), SCREEN_W/2, 570, ALLEGRO_ALIGN_CENTRE, "Enter to try again");
 
+=======
+                al_draw_text(font3, al_map_rgb(0, 0, 0), 10, 10, 0, cont_mortes);
+                sprintf(cont_mortes, "mortes: %d", deaths);
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
             }
 
 
@@ -1964,13 +2373,9 @@ int main(int argc, char **argv)
             if (fase == 1)
             {
                 al_draw_bitmap (obstaculo, obs_pos_x[0], obs_pos_y[0], 0);
-
                 al_draw_bitmap(obstaculo, obs_pos_x[2], obs_pos_y[2], 0);
-
                 al_draw_bitmap(obstaculo, obs_pos_x[4], obs_pos_y[4], 0);
-
                 al_draw_bitmap(obstaculo, obs_pos_x[1], obs_pos_y[1], 0);
-
                 al_draw_bitmap(obstaculo, obs_pos_x[3], obs_pos_y[3], 0);
             }
             else if (fase == 2)
@@ -1995,6 +2400,7 @@ int main(int argc, char **argv)
                     }
                 }
 
+<<<<<<< HEAD
                 for (i=0 ; i<7; i++)
                 {
                     al_draw_bitmap(obstaculo, obs_pos_x[i], obs_pos_y[i], 0);
@@ -2002,6 +2408,8 @@ int main(int argc, char **argv)
             }
 
 
+=======
+>>>>>>> 76a10ac9b1031bb8b1876fa584c8872257c52e4a
             al_flip_display();
 
         }
@@ -2009,28 +2417,23 @@ int main(int argc, char **argv)
     }
 
 
-
-
-
+    al_destroy_font(font);
+    al_destroy_font(font2);
+    al_destroy_font(font3);
+    al_destroy_font(font4);
+    al_destroy_sample_instance(selectingmenu);
+    al_destroy_sample(selectingmenu_sample);
+    al_destroy_audio_stream(musica);
     al_destroy_bitmap(bloco);
-
     al_destroy_bitmap(obstaculo);
-
     al_destroy_bitmap(moeda);
-
     al_destroy_bitmap(background_1);
-
     al_destroy_bitmap(background_2);
-
     al_destroy_bitmap(background_3);
-
+    al_destroy_bitmap(background_menu);
     al_destroy_timer(timer);
-
     al_destroy_display(display);
-
     al_destroy_event_queue(event_queue);
-
-
 
     return 0;
 
